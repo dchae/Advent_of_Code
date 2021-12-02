@@ -7,12 +7,14 @@ print(inputdata)
 
 horizontal_position = 0
 depth = 0
+aim = 0
 for movement in inputdata:
     if movement[0] == "forward":
         horizontal_position += movement[1]
+        depth += aim * movement[1]
     if movement[0] == "up":
-        depth -= movement[1]
+        aim -= movement[1]
     if movement[0] == "down":
-        depth += movement[1]
+        aim += movement[1]
 
 print(horizontal_position * depth)
