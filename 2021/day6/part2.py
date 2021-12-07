@@ -1,4 +1,4 @@
-istestcase = False
+istestcase = True
 
 inputfilename = ""  # Testcase switcher
 if istestcase:
@@ -29,9 +29,9 @@ def find_fishcount(initialstate, days):  # list index => days, value => # of fis
             today + 9, len(calendar), 7
         ):  # 9 days for new fish to reproduce once, then 7 days
             calendar[day] += calendar[today]
-    # print(calendar)  # debugging
+    print(calendar)  # debugging
     return sum(calendar)
 
 
 # print(initialstate)
-print(find_fishcount(initialstate, 256))
+print(find_fishcount(initialstate, 18))
