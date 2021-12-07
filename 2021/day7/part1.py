@@ -1,4 +1,4 @@
-istestcase = False
+istestcase = True
 
 inputfilename = ""  # Testcase switcher
 if istestcase:
@@ -35,7 +35,7 @@ def optimise_fuel(inputdata):
     for i in range(max(inputdata) + 1):
         fuelused = 0
         for hpos in inputdata:
-            fuelused += abs(hpos - i) * (abs(hpos - i) + 1) // 2
+            fuelused += abs(hpos - i)
         if fuelused >= prevfuel:
             return prevfuel
         prevfuel = fuelused
