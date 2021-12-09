@@ -20,7 +20,7 @@ with open(
 print(signalpatterns)
 print(outputvalues)
 
-# 1 needs 2 digits, 4:4, 7:3, 8:7
+# number:len(string) => 1:2 4:4, 7:3
 def count1478(outputvalues):
     count = 0
     for row in outputvalues:
