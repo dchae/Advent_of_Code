@@ -72,5 +72,5 @@ def decode(signalpatterns, outputvalues):
     return outputlist
 
 
-# print("Decoded Outputs:", decode(signalpatterns, outputvalues))
+print("Decoded Outputs:", decode(signalpatterns, outputvalues))
 print("Answer:", sum(decode(signalpatterns, outputvalues)))
