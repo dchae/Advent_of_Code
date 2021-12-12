@@ -1,11 +1,15 @@
-istestcase = False
+istestcase = True
 
 inputfilename = ""  # Testcase switcher
 if istestcase:
-    inputfilename = r"C:\github-dchae\Advent_of_Code\2021\day9\exinput1.txt"
+    inputfilename = (
+        r"/Users/danielchae/github-dchae/Advent_of_Code/2021/day9/exinput1.txt"
+    )
 
 else:
-    inputfilename = r"C:\github-dchae\Advent_of_Code\2021\day9\input1.txt"
+    inputfilename = (
+        r"/Users/danielchae/github-dchae/Advent_of_Code/2021/day9/input1.txt"
+    )
 
 inputdata = []
 with open(inputfilename) as inputfile:  # read input and initialise inputdata
@@ -16,8 +20,11 @@ with open(inputfilename) as inputfile:  # read input and initialise inputdata
         for num in line:
             nums.append(int(num))
         inputdata.append(nums)
+
+print("Grid:")
 for x in inputdata:
     print(x)
+print()
 
 
 def find_lowpoints(inputdata):
@@ -45,4 +52,5 @@ def find_risk(lowpoints):
     return risk
 
 
-print(find_risk(find_lowpoints(inputdata)))
+print("Lowpoints:", find_lowpoints(inputdata))
+print("Answer:", find_risk(find_lowpoints(inputdata)))
