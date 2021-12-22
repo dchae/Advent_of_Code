@@ -1,4 +1,4 @@
-istestcase = False
+istestcase = True
 
 inputfilename = ""  # Testcase switcher
 if istestcase:
@@ -20,7 +20,7 @@ with open(inputfilename) as inputfile:  # read input and initialise connections
             movesdict[line[1]] = [line[0]]
         else:
             movesdict[line[1]].append(line[0])
-# print(movesdict)
+print(movesdict)
 
 # Depth First Search
 paths = []
@@ -39,5 +39,5 @@ def gen_paths(paths, path, movesdict, cave):
 
 gen_paths(paths, [], movesdict, "start")
 print(len(paths))
-# for p in paths:
-#     print(p)
+for p in paths:
+    print(p)
