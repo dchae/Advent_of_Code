@@ -1,57 +1,43 @@
-from collections import deque
-from itertools import chain, combinations
-
-istestcase = True
+istestcase = False
 
 inputfilename = ""  # Testcase switcher
 if istestcase:
-    inputfilename = (
-        r"/Users/danielchae/github-dchae/Advent_of_Code/2021/day12/exinput1.txt"
-    )
+    inputfilename = r"C:\github-dchae\Advent_of_Code\2021\day12\exinput1.txt"
 
 else:
-    inputfilename = (
-        r"/Users/danielchae/github-dchae/Advent_of_Code/2021/day12/input1.txt"
-    )
+    inputfilename = r"C:\github-dchae\Advent_of_Code\2021\day12\input1.txt"
 
-connections = set()
-smallcaves = set()
-bigcaves = set()
-starts = set()
-ends = set()
+movesdict = {}
 with open(inputfilename) as inputfile:  # read input and initialise connections
     lines = inputfile.readlines()
     for line in lines:
         line = line.strip().split("-")
-        connections.add((line[0], line[1]))
-        if line[0] == "start":
-            starts.add((line[0], line[1]))
-        if line[1] == "end":
-            ends.add((line[0], line[1]))
-        for cave in line:
-            if len(cave) == 1:
-                if cave.isupper():
-                    bigcaves.add(cave)
-                else:
-                    smallcaves.add(cave)
+        if line[0] not in movesdict:
+            movesdict[line[0]] = [line[1]]
+        else:
+            movesdict[line[0]].append(line[1])
+        if line[1] not in movesdict:
+            movesdict[line[1]] = [line[0]]
+        else:
+            movesdict[line[1]].append(line[0])
+# print(movesdict)
 
-print(connections)
-print(bigcaves)
-print(smallcaves)
-print(starts)
-print(ends)
-
+# Depth First Search
 paths = []
-caves = bigcaves.union(smallcaves)
-print(caves)
 
 
-def powerset(caves):  # get set of all possible paths
-    s = list(caves)
-    return chain.from_iterable(combinations(s, r) for r in range(1, len(s) + 1))
+def gen_paths(paths, path, movesdict, cave):
+    path.append(cave)
+    if cave == "end":
+        paths.append(path[:])
+    else:
+        for nextcave in movesdict[cave]:
+            if not (nextcave.islower() and nextcave in path):
+                gen_paths(paths, path, movesdict, nextcave)
+    path.pop()
 
 
-pset = list(powerset(caves))
-print("POWERSET:", pset)
-
-# eliminate paths that are not valid
+gen_paths(paths, [], movesdict, "start")
+print(len(paths))
+# for p in paths:
+#     print(p)
