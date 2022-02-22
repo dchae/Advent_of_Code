@@ -25,6 +25,8 @@ with open(inputfilename) as inputfile:  # read input and initialise map
 print("Length:", len(dotmap))
 print("Folds:", folds)
 
+# test
+
 
 def fold(dotmap, f):
     if f[0] == "y":  # if folding up
