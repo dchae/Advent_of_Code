@@ -1,8 +1,8 @@
 from collections import deque
 
-istestcase = False
+istestcase = True
 
-inputfilename = ""  # Testcase switcher
+# Testcase switcher
 if istestcase:
     inputfilename = r"C:\github-dchae\Advent_of_Code\2021\day14\exinput1.txt"
 

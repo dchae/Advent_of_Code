@@ -4,14 +4,10 @@ istestcase = True
 
 inputfilename = ""  # Testcase switcher
 if istestcase:
-    inputfilename = (
-        r"/Users/danielchae/github-dchae/Advent_of_Code/2021/day14/exinput1.txt"
-    )
+    inputfilename = r"2021\day14\exinput1.txt"
 
 else:
-    inputfilename = (
-        r"/Users/danielchae/github-dchae/Advent_of_Code/2021/day14/input1.txt"
-    )
+    inputfilename = r"2021\day14\input1.txt"
 
 insertions = {}
 with open(inputfilename) as inputfile:
