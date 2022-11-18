@@ -17,22 +17,11 @@ with open(inputfilename) as inputfile:
         line = line.strip().split(" -> ")
         insertions[(line[0][0], line[0][1])] = line[1]
 
+import re
 
-def generate_polymer(polymer1, polymer2, step, steplimit):
-    if step >= steplimit:
-        return
-    else:
-        while len(polymer1) > 1:
-            a = polymer1.popleft()
-            c = polymer1[0]
-            polymer2.append(a)
-            if (a, c) in insertions:
-                polymer2.append(insertions[(a, c)])
-            else:
-                polymer2.append(polymer1.popleft())
-        polymer2.append(polymer1.popleft())
-        step += 1
-        generate_polymer(polymer2, polymer1, step, steplimit)
+def generate_polymer(polymer_template, steplimit):
+    for _ in range(steplimit):
+        re.sub(r"" polymer_template
 
 
 def find_answer(template, steplimit):
