@@ -10,10 +10,10 @@ while true
   line_idx += 1
 end
 
-instructions = []
-(line_idx + 1...lines.size).each do |i|
-  instructions << lines[i].gsub(/[^\d]/, " ").split.map(&:to_i)
-end
+instructions =
+  (line_idx + 1...lines.size).map do |i|
+    lines[i].gsub(/[^\d]/, " ").split.map(&:to_i)
+  end
 
 crates = [[]] + crates.keys.sort.map { |k| crates[k] }
 
