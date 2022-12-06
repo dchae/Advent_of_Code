@@ -1,4 +1,4 @@
-lines = File.read("2022/day5/input.txt").split("\n")
+lines = File.read("2022/day5/exinput.txt").split("\n")
 
 crates = Hash.new { |h, k| h[k] = [] }
 
