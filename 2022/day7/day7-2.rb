@@ -1,4 +1,4 @@
-lines = File.read("2022/day7/exinput.txt")[2..].split("\n$ ")
+lines = File.read("2022/day7/input.txt")[2..].split("\n$ ")
 
 directories = {}
 filepath = []
@@ -22,6 +22,7 @@ lines.each do |l|
     cur["items"] = items.map { |item| item.split }
   end
 end
+
 dir_sizes = []
 def recursum(dir, dir_sizes)
   if dir.keys.empty?
@@ -35,8 +36,10 @@ def recursum(dir, dir_sizes)
     return dir_size
   end
 end
-recursum(directories, dir_sizes)
-# p1
-# p dir_sizes.filter { |x| x <= 100_000 }.sum
+used_space = recursum(directories, dir_sizes)
 
-p dir_sizes.sort.find { |dir, size| }
+# part 1
+p dir_sizes.filter { |x| x <= 100_000 }.sum
+
+# part 2
+p dir_sizes.sort.find { |size| size > 30_000_000 - 70_000_000 + used_space }

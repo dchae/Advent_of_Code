@@ -4,17 +4,17 @@ crates = Hash.new { |h, k| h[k] = [] }
 
 line_idx = 0
 while true
-  line = lines[line_idx]
-  break if line.strip.empty?
-  line.chars.each_with_index { |c, i| crates[i] << c if c =~ /[A-Z]/ }
+  l = lines[line_idx]
+  break if l.strip.empty?
+  l.chars.each_with_index { |c, i| crates[i] << c if c =~ /[A-Z]/ }
   line_idx += 1
 end
 line_idx += 1
 
 instructions = []
 while line_idx < lines.size
-  line = lines[line_idx]
-  instructions << line.gsub(/[^\d]/, " ").split.map(&:to_i)
+  l = lines[line_idx]
+  instructions << l.gsub(/[^\d]/, " ").split.map(&:to_i)
   line_idx += 1
 end
 
