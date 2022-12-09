@@ -4,9 +4,9 @@ crates = Hash.new { |h, k| h[k] = [] }
 
 line_idx = 0
 while true
-  line = lines[line_idx]
-  break if line.empty?
-  line.chars.each_with_index { |c, i| crates[i] << c if c =~ /[A-Z]/ }
+  l = lines[line_idx]
+  break if l.empty?
+  l.chars.each_with_index { |c, i| crates[i] << c if c =~ /[A-Z]/ }
   line_idx += 1
 end
 

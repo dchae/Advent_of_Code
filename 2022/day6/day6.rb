@@ -1,5 +1,5 @@
-(line = File.read("2022/day6/input.txt").chomp.chars).each_index do |i|
-  if line[i, (n = 14)].uniq.size == n
+(l = File.read("2022/day6/input.txt").chomp.chars).each_index do |i|
+  if l[i, (n = 14)].uniq.size == n
     (
       p i + n
       break
