@@ -10,7 +10,7 @@
             "type": "rdbg",
             "name": "Debug current file with rdbg",
             "request": "launch",
-            "script": "${file}",
+            "script": "'${file}'",
             "args": [],
             "askParameters": true
         },
