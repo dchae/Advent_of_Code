@@ -1,16 +1,7 @@
-# ds: hashmaps of hashmaps, representing each monkey
-# monkeys = {
-#   0 => {
-#     items: [79, 98],
-#     operation: "new = old * 19",
-#     test: (x % 23 ? 2 : 3),
-#     inspection: 0
-#   },
-# }
 monkeys = {}
-lines = File.read("2022/day11/exinput.txt").split(/\n(?=Monkey)/)
-lines.each do |m|
-  data = m.split("\n")
+lines = File.read("2022/day11/input.txt").split(/\n(?=Monkey)/)
+lines.each do |line|
+  data = line.split("\n")
   i = data[0].split.last.to_i
   monkeys[i] = {
     items: data[1].scan(/\b\d+\b/).map(&:to_i),
@@ -22,7 +13,9 @@ lines.each do |m|
   }
 end
 
-rounds = 20
+mod = monkeys.map { |k, v| v[:test] }.uniq.reduce(&:*)
+
+rounds = 10_000 # 20 for p1
 rounds.times do |_|
   monkeys.each do |i, monkey|
     monkey[:inspection_count] += monkey[:items].size
@@ -30,7 +23,7 @@ rounds.times do |_|
       item = monkey[:items].shift
       num = monkey[:op][-1] =~ /old/ ? item : monkey[:op].last
       item = item.send(monkey[:op].first, num)
-      item /= 3
+      item %= mod # /= 3 for p1
       if item % monkey[:test] == 0
         target = monkey[:if_true]
       else
@@ -39,9 +32,6 @@ rounds.times do |_|
       monkeys[target][:items] << item
     end
   end
-  # puts "Round: #{_ + 1}"
-  # monkeys.each { |i, monkey| puts "Monkey #{i}: #{monkey[:items].join(", ")}" }
-  # puts
 end
 
 p monkeys.map { |k, v| v[:inspection_count] }.sort[-2..].reduce(&:*)

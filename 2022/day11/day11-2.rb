@@ -8,7 +8,7 @@
 #   },
 # }
 monkeys = {}
-lines = File.read("2022/day11/exinput.txt").split(/\n(?=Monkey)/)
+lines = File.read("2022/day11/input.txt").split(/\n(?=Monkey)/)
 lines.each do |m|
   data = m.split("\n")
   i = data[0].split.last.to_i
@@ -22,7 +22,8 @@ lines.each do |m|
   }
 end
 
-rounds = 20
+divisor = monkeys.map { |k, v| v[:test] }.uniq.reduce(&:*)
+rounds = 10_000
 rounds.times do |_|
   monkeys.each do |i, monkey|
     monkey[:inspection_count] += monkey[:items].size
@@ -30,7 +31,7 @@ rounds.times do |_|
       item = monkey[:items].shift
       num = monkey[:op][-1] =~ /old/ ? item : monkey[:op].last
       item = item.send(monkey[:op].first, num)
-      item /= 3
+      item %= divisor
       if item % monkey[:test] == 0
         target = monkey[:if_true]
       else
