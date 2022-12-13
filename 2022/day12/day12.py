@@ -8,7 +8,7 @@ output: int
 
 ds: dict, queue
 
-algo: Dijkstra
+algo: BFS
 init seen set
 init parentsMap hashmap
 init nodeCosts hashmap

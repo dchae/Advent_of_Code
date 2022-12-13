@@ -92,14 +92,26 @@ start = grid_find(grid, "S")
 grid[start[1]][start[0]] = "a".ord
 target = grid_find(grid, "E")
 grid[target[1]][target[0]] = "z".ord
-p parents = bfs(grid, start, target)
-path = [] << target
-while parents[target]
-  # system "clear"
-  # grid.each { |row| p row }
-  # grid[target[1]][target[0]] = "X" #grid[target[1]][target[0]].to_s
-  path << parents[target]
-  target = parents[target]
-end
-p path.reverse
-p path.size - 1
+
+p2_starts =
+  (0...grid.size)
+    .map { |y| (0...grid.first.size).map { |x| [x, y] } }
+    .flatten(1)
+    .filter { |x, y| grid[y][x] == "a".ord }
+
+p2 =
+  p2_starts.map do |start_candidate|
+    parents = bfs(grid, start_candidate, target)
+    if parents.include?(target)
+      cur_tar = target
+      path = [] << cur_tar
+      while parents[cur_tar]
+        path << parents[cur_tar]
+        cur_tar = parents[cur_tar]
+      end
+      path.size - 1
+    else
+      nil
+    end
+  end
+p p2.compact.min
