@@ -2,13 +2,17 @@
 input: string
 output: int
 
-- find the path with lowest total steps
-- start at "S", end at "E"
-- value at next square can be at most one higher than value at current square
 
 ds: dict, queue
 
-algo: BFS
+
+algo: dijkstra?
+parse input:
+given the flow rate of the valves, and the connections, create a node tree
+
+
+use dijsktra modified
+
 init seen set
 init parentsMap hashmap
 init nodeCosts hashmap
@@ -28,10 +32,15 @@ reconstruct path from parentsMap
 from collections import defaultdict
 import heapq as heap
 
-inputfilename = r"2022/day12/exinput.txt"
+inputfilename = r"2022/day16/exinput.txt"
 with open(inputfilename) as inputfile:
     lines = inputfile.readlines()
-    map = [list(int(x) for x in line.strip()) for line in lines]
+    for line in lines:
+        valve_info, connections_info = line.split(";")
+        valve_id = valve_info.split()[1]
+        flow_rate = valve_info.split("=")[1]
+        connections = connections_info.split(/(valves)/)[1].strip().split(", ")
+        print(connections)
 
 
 def find_start_end(map):
@@ -74,16 +83,16 @@ def dijkstra(map, start):
     return parentsMap, costs
 
 
-parentsMap, costs = dijkstra(map, (0, 0))
+# parentsMap, costs = dijkstra(map, (0, 0))
 
-end = len(map[-1]) - 1, len(map) - 1
-print(costs[end])
+# end = len(map[-1]) - 1, len(map) - 1
+# print(costs[end])
 
-cur = end
-path = []
-while cur != (0, 0):
-    path.append((cur, map[cur[1]][cur[0]]))
-    cur = parentsMap[cur]
-path.reverse()
+# cur = end
+# path = []
+# while cur != (0, 0):
+#     path.append((cur, map[cur[1]][cur[0]]))
+#     cur = parentsMap[cur]
+# path.reverse()
 # for pos, risk in path:
 #     print(pos, risk)
