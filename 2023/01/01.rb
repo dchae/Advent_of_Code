@@ -4,10 +4,10 @@ end
 
 path = filepath('input.txt')
 # path = filepath('exinput.txt')
-input = File.read(path).split("\n")
+p input = File.read(path).split("\n")
 
 # Part 1
-# s_arrs = input.map { |s| s.gsub(/[^0-9]/, "").chars}
+# p s_arrs = input.map { |s| s.gsub(/[^0-9]/, "").chars}
 # p s_arrs.map { |arr| arr[0] + arr[-1]}.map(&:to_i).sum
 
 # Part 2
