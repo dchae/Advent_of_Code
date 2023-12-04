@@ -1,3 +1,3 @@
-My 2021 Advent of Code Solutions in Python.
+My Advent of Code Solutions in Python (2021) and Ruby (2022, 2023).
 
-Daniel Chae (2021)
+Daniel Chae
