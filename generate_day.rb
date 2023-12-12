@@ -30,7 +30,7 @@ end
 
 path = filepath('input.txt')
 path = filepath('exinput.txt')
-lines = File.read(path).split("\n")
+lines = File.read(path).split(\"\n\")
 
 # Part 1
 
