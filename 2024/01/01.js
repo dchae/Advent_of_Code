@@ -1,39 +1,30 @@
-"use strict";
-const { readFileSync } = require("fs");
-const { join, resolve } = require("path");
+const {
+  readFileSync,
+  toTally,
+  join,
+  resolve,
+  transpose,
+} = require("../../js_modules/helpers.js");
 
 function filepath(filename, subfolder = "") {
   return join(resolve(__dirname), subfolder, filename);
 }
 
 let path = filepath("input.txt");
-// path = filepath("exinput.txt");
+path = filepath("exinput.txt");
 let lines = readFileSync(path, "utf-8").trim().split("\n");
 
-let list1 = [];
-let list2 = [];
+// Part 1
 
-for (let line of lines) {
-  let [a, b] = line.split(/\s+/);
-  list1.push(Number(a));
-  list2.push(Number(b));
-}
-
-list1.sort();
-list2.sort();
+let pairs = lines.map((line) => line.split(/\s+/).map(Number));
+let [list1, list2] = transpose(pairs);
+[list1, list2].forEach((arr) => arr.sort((a, b) => a - b));
 
 let differences = list1.map((x, i) => Math.abs(x - list2[i]));
-let sum = differences.reduce((acc, x) => acc + x);
-console.log(sum);
+console.log(differences.sum());
 
-function toTally(iter) {
-  return iter.reduce(
-    (tally, x) => tally.set(x, (tally.get(x) ?? 0) + 1),
-    new Map(),
-  );
-}
+// Part 2
 
 let tally2 = toTally(list2);
-console.log(tally2);
-let simScore = list1.reduce((acc, x) => acc + x * (tally2.get(x) ?? 0), 0);
+let simScore = list1.sum((x) => x * (tally2.get(x) ?? 0));
 console.log(simScore);

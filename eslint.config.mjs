@@ -42,6 +42,8 @@ export default [
       sourceType: "script",
 
       parserOptions: {
+        sourceType: "module",
+        allowImportExportEverywhere: true,
         ecmaFeatures: {
           // impliedStrict: true,
           impliedStrict: false,
@@ -123,7 +125,7 @@ export default [
       "max-lines-per-function": [
         "error",
         {
-          max: 20,
+          max: 30,
           skipBlankLines: true,
           skipComments: true,
         },
