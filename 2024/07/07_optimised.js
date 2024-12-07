@@ -38,12 +38,13 @@ let lines = readFileSync(path, "utf-8")
   .split("\n")
   .map((line) => line.match(/\d+/g).map(Number));
 
-const OPS = [(a, b) => a * b, (a, b) => a + b];
+const OPS = [(a, b) => (a % b === 0 ? a / b : -1), (a, b) => a - b];
 
-function evalsTo(nums, target, i = 1, cur = nums[0]) {
-  if (cur > target || i === nums.length) return cur === target;
+function evalsTo(nums, cur, i = nums.length - 1) {
+  if (!i) return cur === nums[0];
+  if (cur < 0) return false;
 
-  return OPS.some((func) => evalsTo(nums, target, i + 1, func(cur, nums[i])));
+  return OPS.some((func) => evalsTo(nums, func(cur, nums[i]), i - 1));
 }
 
 function part1(lines) {
@@ -54,15 +55,20 @@ function part1(lines) {
   console.log(filtered.sum());
 }
 
-part1(lines);
+// part1(lines);
 
 // Part 2
 
 function part2(lines) {
-  OPS.push((x, y) => +("" + x + y));
+  let unconcat = (x, y) => {
+    let [sub, yMag] = [x - y, 10 ** (Math.floor(Math.log10(y)) + 1)];
+    return sub > 0 && sub % yMag === 0 ? sub / yMag : -1;
+  };
 
+  OPS.push(unconcat);
   part1(lines);
 }
+
 const startTime = performance.now();
 part2(lines);
 
