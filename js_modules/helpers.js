@@ -3,7 +3,7 @@ const { join, resolve } = require("path");
 
 Object.defineProperty(Array.prototype, "sum", {
   value: function sum(callback = (x) => x) {
-    return this.reduce((acc, x) => acc + callback(x), 0);
+    return this.reduce((acc, ...args) => acc + callback(...args), 0);
   },
   writable: true,
   configurable: true,

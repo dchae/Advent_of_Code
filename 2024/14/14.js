@@ -26,14 +26,19 @@ function timeIt(func, ...args) {
 let path = filepath("input.txt");
 path = filepath("exinput.txt");
 
+/*
+Input:
+Output:
+*/
+
 // Part 1
 let lines = readFileSync(path, "utf-8").trim().split("\n");
 
 function part1(lines) {}
 
-part1(lines);
+timeIt(part1, lines);
 
 // Part 2
 function part2(lines) {}
 
-part2(lines);
+timeIt(part2, lines);
