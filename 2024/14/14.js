@@ -5,22 +5,12 @@ const {
   resolve,
   transpose,
   rotate,
+  count,
+  timeIt,
 } = require("../../js_modules/helpers.js");
 
 function filepath(filename, subfolder = "") {
   return join(resolve(__dirname), subfolder, filename);
-}
-
-function count(iter, condition) {
-  return iter.reduce((count, x) => count + (condition(x) ? 1 : 0), 0);
-}
-
-function timeIt(func, ...args) {
-  const startTime = performance.now();
-  func(...args);
-  const endTime = performance.now();
-
-  console.log(`${func.name}: ${endTime - startTime} ms`);
 }
 
 let path = filepath("input.txt");
@@ -122,18 +112,6 @@ function part2(lines, lim) {
     return { p, v };
   });
 
-  // let best = 0;
-  // for (let i = 1; i <= lim; i++) {
-  //   robots.forEach((robot) => updateRobotAfterNSeconds(robot, 1));
-  //
-  //   const connectedness = getConnectedness(robots);
-  //   if (connectedness > best) {
-  //     best = connectedness;
-  //     printGrid(robots);
-  //     console.log("i: ", i);
-  //   }
-  // }
-
   let best = robots.length;
   for (let i = 1; i <= lim; i++) {
     robots.forEach((robot) => updateRobotAfterNSeconds(robot, 1));
@@ -148,16 +126,3 @@ function part2(lines, lim) {
 }
 
 timeIt(part2, lines, 10000);
-
-function isAdjacent(robot1, robot2) {
-  return [0, 1].every((i) => Math.abs(robot1.p[i] - robot2.p[i]) === 1);
-}
-
-function getConnectedness(robots) {
-  return robots.reduce(
-    (acc, robot) =>
-      acc +
-      (robots.some((otherRobot) => isAdjacent(robot, otherRobot)) ? 1 : 0),
-    0,
-  );
-}

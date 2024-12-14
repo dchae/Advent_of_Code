@@ -23,4 +23,26 @@ function transpose(arr) {
 function rotate(grid) {
   return grid[0].map((_, j) => grid.map((_, i) => grid[i][j]).reverse());
 }
-module.exports = { readFileSync, toTally, transpose, join, resolve, rotate };
+
+function count(iter, condition) {
+  return iter.reduce((count, x) => count + (condition(x) ? 1 : 0), 0);
+}
+
+function timeIt(func, ...args) {
+  const startTime = performance.now();
+  func(...args);
+  const endTime = performance.now();
+
+  console.log(`${func.name}: ${endTime - startTime} ms`);
+}
+
+module.exports = {
+  readFileSync,
+  toTally,
+  transpose,
+  join,
+  resolve,
+  rotate,
+  count,
+  timeIt,
+};
