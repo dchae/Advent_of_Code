@@ -73,6 +73,11 @@ function getQuadrants(robots) {
   return quadrants;
 }
 
+function getSafetyFactor(robots) {
+  const quadrants = getQuadrants(robots);
+  return quadrants.map((q) => q.length).reduce((a, x) => a * x);
+}
+
 function part1(lines) {
   const robots = lines.map((line) => {
     const [p, v] = line.split(" ").map((s) => s.match(/-?\d+/g).map(Number));
@@ -80,10 +85,7 @@ function part1(lines) {
   });
 
   robots.forEach((robot) => updateRobotAfterNSeconds(robot, 100));
-
-  const quadrants = getQuadrants(robots);
-  const safetyFactor = quadrants.map((q) => q.length).reduce((a, x) => a * x);
-  console.log(safetyFactor);
+  console.log(getSafetyFactor(robots));
 }
 
 timeIt(part1, lines);
@@ -97,24 +99,19 @@ function printGrid(robots) {
   console.log(grid.map((line) => line.join("")).join("\n"));
 }
 
-function getOverlap(robots) {
-  const keys = robots.map((robot) => robot.p.join());
-  return robots.length - new Set(keys).size;
-}
-
 function part2(lines, lim) {
   const robots = lines.map((line) => {
     const [p, v] = line.split(" ").map((s) => s.match(/-?\d+/g).map(Number));
     return { p, v };
   });
 
-  let best = robots.length;
+  let best = Infinity;
   for (let i = 1; i <= lim; i++) {
     robots.forEach((robot) => updateRobotAfterNSeconds(robot, 1));
 
-    const overlap = getOverlap(robots);
-    if (overlap <= best) {
-      best = overlap;
+    const safetyFactor = getSafetyFactor(robots);
+    if (safetyFactor < best) {
+      best = safetyFactor;
       printGrid(robots);
       console.log("i: ", i);
     }
