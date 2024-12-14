@@ -41,14 +41,10 @@ let lines = readFileSync(path, "utf-8").trim().split("\n");
 const WIDTH = 101;
 const HEIGHT = 103;
 
-function mod(n, b) {
-  return ((n % b) + b) % b;
-}
-
 function updateRobotAfterNSeconds(robot, n) {
   for (let i = 0; i < n; i++) {
-    robot.p[0] = mod(robot.p[0] + robot.v[0], WIDTH);
-    robot.p[1] = mod(robot.p[1] + robot.v[1], HEIGHT);
+    robot.p[0] = (robot.p[0] + robot.v[0] + WIDTH) % WIDTH;
+    robot.p[1] = (robot.p[1] + robot.v[1] + HEIGHT) % HEIGHT;
   }
 }
 
