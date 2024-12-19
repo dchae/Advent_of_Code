@@ -62,14 +62,14 @@ function computer(A = 0n, B = 0n, C = 0n, program) {
   const combo = (n) => (4n <= n ? [A, B, C][n - 4n] : n);
 
   const operations = [
-    (operand) => (A /= 2n ** combo(operand)),
+    (operand) => (A >>= combo(operand)),
     (operand) => (B ^= operand),
     (operand) => (B = combo(operand) % 8n),
     (operand) => (i = A === 0n ? i : Number(operand - 2n)),
     (operand) => (B ^= C),
     (operand) => output.push(combo(operand) % 8n),
-    (operand) => (B = A / 2n ** combo(operand)),
-    (operand) => (C = A / 2n ** combo(operand)),
+    (operand) => (B = A >> combo(operand)),
+    (operand) => (C = A >> combo(operand)),
   ];
 
   let i = 0;

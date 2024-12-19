@@ -70,14 +70,7 @@ function getPos(grid, callback) {
   return [-1, -1];
 }
 
-function dfs(
-  grid,
-  [y, x],
-  dirIdx = 0,
-  target = "E",
-  score = 0,
-  seen = new Map(),
-) {
+function dfs(grid, [y, x], i = 0, target = "E", score = 0, seen = new Map()) {
   let key = [y, x].join();
 
   if (seen.has(key)) {
@@ -87,15 +80,15 @@ function dfs(
   }
 
   let [seenScore] = seen.get(key);
-  if (!(seenScore < score)) seen.set(key, [score, dirIdx]);
+  if (!(seenScore < score)) seen.set(key, [score, i]);
   if (grid[y][x] === target) return seen;
 
   for (let k of [0, 1, 3]) {
-    let i = (dirIdx + k) % 4;
-    let [vy, vx] = DIRS[i];
+    let j = (i + k) % 4;
+    let [vy, vx] = DIRS[j];
     let [y2, x2] = [y + vy, x + vx];
     let newScore = score + 1 + 1000 * !!k;
-    if (grid[y2][x2] !== "#") dfs(grid, [y2, x2], i, target, newScore, seen);
+    if (grid[y2][x2] !== "#") dfs(grid, [y2, x2], j, target, newScore, seen);
   }
 
   return seen;
@@ -107,6 +100,7 @@ function part1(input) {
   let endPos = getPos(grid, (v) => v === "E");
   let scores = dfs(grid, startPos, 0);
   let best = scores.get(endPos.join())[0];
+
   console.log(best);
 }
 
