@@ -30,10 +30,11 @@ function count(iter, condition) {
 
 function timeIt(func, ...args) {
   const startTime = performance.now();
-  func(...args);
+  let res = func(...args);
   const endTime = performance.now();
 
   console.log(`${func.name}: ${endTime - startTime} ms`);
+  return res;
 }
 
 module.exports = {
