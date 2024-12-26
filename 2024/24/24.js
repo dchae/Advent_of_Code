@@ -25,6 +25,7 @@ function timeIt(func, ...args) {
 
 let path = filepath("input.txt");
 // path = filepath("exinput.txt");
+// path = filepath("inputSwapped.txt");
 
 /*
 Input:
@@ -131,9 +132,11 @@ function toDOT(gates) {
   let res = [];
   for (let gate of gates) {
     res.push(
-      ...gate.inputs.map(
-        (input) => `"${input}" -> "${gate.output}" [label="${gate.type}"];`,
-      ),
+      gate.inputs
+        .map(
+          (input) => `"${input}" -> "${gate.output}" [label="${gate.type}"];`,
+        )
+        .join(" "),
     );
   }
   return res.join("\n");
@@ -164,7 +167,7 @@ function analyse(wires, gates) {
 function part2(input) {
   let [wires, gates] = parseInput(input);
   // output to graphviz
-  // console.log(toDOT(gates));
+  console.log(toDOT(gates));
   analyse(wires, gates);
   console.log("fgc,z12,z29,mtj,dgr,vvm,dtv,z37".split(",").sort().join());
 }
