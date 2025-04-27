@@ -16,7 +16,7 @@ function count(iter, condition) {
 }
 
 let path = filepath("input.txt");
-// path = filepath("exinput.txt");
+path = filepath("exinput2.txt");
 
 // Part 1
 let lines = readFileSync(path, "utf-8").trim().split("\n");

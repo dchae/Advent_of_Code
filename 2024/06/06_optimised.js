@@ -17,6 +17,7 @@ function count(iter, condition) {
 
 let path = filepath("input.txt");
 path = filepath("exinput.txt");
+path = filepath("exinput2.txt");
 
 // Part 1
 let lines = readFileSync(path, "utf-8").trim().split("\n");
@@ -37,21 +38,23 @@ function findStartPos(grid) {
   return -1;
 }
 
-// function traverse(grid, row, col, dirIdx, path = new Set()) {
-//   if (!grid[row] || !grid[row][col]) return path;
-//
-//   let key = JSON.stringify([row, col]);
-//   path.add(key);
-//
-//   let [rowStep, colStep] = dirs[dirIdx];
-//   while (grid[row + rowStep] && grid[row + rowStep][col + colStep] === "#") {
-//     dirIdx++;
-//     dirIdx %= 4;
-//     [rowStep, colStep] = dirs[dirIdx];
-//   }
-//
-//   return traverse(grid, row + rowStep, col + colStep, dirIdx, path);
-// }
+function traverse(grid, row, col, dirIdx, path = new Set()) {
+  while (grid[row] && grid[row][col]) {
+    let key = JSON.stringify([row, col]);
+    path.add(key);
+
+    let [rowStep, colStep] = dirs[dirIdx];
+    while (grid[row + rowStep] && grid[row + rowStep][col + colStep] === "#") {
+      dirIdx++;
+      dirIdx %= 4;
+      [rowStep, colStep] = dirs[dirIdx];
+    }
+
+    row += rowStep;
+    col += colStep;
+  }
+  return path;
+}
 
 function part1(lines) {
   let grid = lines.map((line) => line.split(""));
@@ -61,35 +64,14 @@ function part1(lines) {
   console.log(positions.size);
 }
 
-// part1(lines);
+part1(lines);
 
 // Part 2
 function isCyclic(grid, row, col, dirIdx, path = new Set()) {
-  if (!grid[row] || !grid[row][col]) return false;
-
-  let key = [row, col, dirIdx].join();
-  if (path.has(key)) return true;
-  path.add(key);
-
-  let [rowStep, colStep] = dirs[dirIdx];
-  while (grid[row + rowStep] && grid[row + rowStep][col + colStep] === "#") {
-    dirIdx++;
-    dirIdx %= 4;
-    [rowStep, colStep] = dirs[dirIdx];
-  }
-
-  return isCyclic(grid, row + rowStep, col + colStep, dirIdx, path);
-}
-
-let cyclicBarrierPositions = 0;
-function traverse(grid, row, col, dirIdx = 0, path = new Set()) {
   while (grid[row] && grid[row][col]) {
-    let pos = JSON.stringify([row, col, dirIdx]);
-    // let pos = JSON.stringify([row, col]);
-    path.add(pos);
-
-    if (isCyclic(grid, row, col, (dirIdx + 1) % 4, new Set([...path])))
-      cyclicBarrierPositions++;
+    let key = JSON.stringify([row, col, dirIdx]);
+    if (path.has(key)) return true;
+    path.add(key);
 
     let [rowStep, colStep] = dirs[dirIdx];
     while (grid[row + rowStep] && grid[row + rowStep][col + colStep] === "#") {
@@ -102,32 +84,28 @@ function traverse(grid, row, col, dirIdx = 0, path = new Set()) {
     col += colStep;
   }
 
-  return path;
+  return false;
 }
 
 function part2(lines) {
   let grid = lines.map((line) => line.split(""));
-
   let [startRow, startCol] = findStartPos(grid);
-  let path = traverse(grid, startRow, startCol);
-  console.log(cyclicBarrierPositions);
-  // let positions = [...traverse(grid, startRow, startCol, 0).values()];
-  //
-  // let cyclicBarrierPositions = positions.filter((key) => {
-  //   let [row, col] = JSON.parse(key);
-  //   let old = grid[row][col];
-  //   if (old === "^") return false;
-  //   grid[row][col] = "#";
-  //
-  //   let [startRow, startCol] = findStartPos(grid);
-  //   let cyclic = isCyclic(grid, startRow, startCol, 0);
-  //
-  //   grid[row][col] = old;
-  //
-  //   return cyclic;
-  // });
-  //
-  // console.log(cyclicBarrierPositions.length);
+  let positions = [...traverse(grid, startRow, startCol, 0).values()];
+
+  let cyclicBarrierPositions = positions.filter((key) => {
+    let [row, col] = JSON.parse(key);
+    let old = grid[row][col];
+    if (old !== ".") return false;
+    grid[row][col] = "#";
+
+    let cyclic = isCyclic(grid, startRow, startCol, 0);
+
+    grid[row][col] = ".";
+
+    return cyclic;
+  });
+
+  console.log(cyclicBarrierPositions.length);
 }
 
 part2(lines);
